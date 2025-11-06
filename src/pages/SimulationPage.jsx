@@ -16,10 +16,34 @@ function SimulationPage() {
     const total = mensualiteCalculee * d
     const coutCredit = total - m
 
-    setResultat({
+    const resultatCalcul = {
       mensualite: mensualiteCalculee.toFixed(2),
       coutTotal: total.toFixed(2),
       coutCredit: coutCredit.toFixed(2)
+    }
+
+    setResultat(resultatCalcul)
+    enregistrerSimulation(resultatCalcul)
+  }
+
+  function enregistrerSimulation(resultatCalcul) {
+    const simulation = {
+      typeCredit: typeCredit,
+      montant: montant,
+      duree: duree,
+      taux: taux,
+      mensualite: resultatCalcul.mensualite,
+      coutTotal: resultatCalcul.coutTotal,
+      coutCredit: resultatCalcul.coutCredit,
+      date: new Date().toISOString()
+    }
+
+    fetch('http://localhost:3001/simulations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(simulation)
     })
   }
 
