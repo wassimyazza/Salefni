@@ -10,6 +10,17 @@
       "coutTotal": "10529.13",
       "coutCredit": "529.13",
       "date": "2025-11-06T19:55:22.388Z"
+    },
+    {
+      "id": "5211",
+      "typeCredit": "auto",
+      "montant": "120000",
+      "duree": "24",
+      "taux": "5",
+      "mensualite": "5264.57",
+      "coutTotal": "126349.60",
+      "coutCredit": "6349.60",
+      "date": "2025-11-06T20:17:31.191Z"
     }
   ],
   "demandes": []

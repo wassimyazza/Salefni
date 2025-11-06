@@ -1,11 +1,18 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import SimulationPage from './pages/SimulationPage'
+import Simulate from './pages/Simulate'
+import RequestForm from './pages/RequestForm'
 
 function App() {
   return (
-    <div className="App">
-      <SimulationPage />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Simulate />} />
+          <Route path="/request/new/:simulationId" element={<RequestForm />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 
