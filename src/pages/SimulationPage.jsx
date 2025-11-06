@@ -5,17 +5,22 @@ function SimulationPage() {
   const [montant, setMontant] = useState('')
   const [duree, setDuree] = useState('')
   const [taux, setTaux] = useState('')
-  const [mensualite, setMensualite] = useState(0)
-  const [coutTotal, setCoutTotal] = useState(0)
+  const [resultat, setResultat] = useState(null)
 
   function calculerCredit() {
     const m = parseFloat(montant)
     const d = parseFloat(duree)
-    const t = parseFloat(taux) / 100 / 12
+    const tauxNum = parseFloat(taux)
+    const t = tauxNum / 100 / 12
     const mensualiteCalculee = (m * t) / (1 - Math.pow(1 + t, -d))
     const total = mensualiteCalculee * d
-    setMensualite(mensualiteCalculee.toFixed(2))
-    setCoutTotal(total.toFixed(2))
+    const coutCredit = total - m
+
+    setResultat({
+      mensualite: mensualiteCalculee.toFixed(2),
+      coutTotal: total.toFixed(2),
+      coutCredit: coutCredit.toFixed(2)
+    })
   }
 
   return (
@@ -39,17 +44,26 @@ function SimulationPage() {
       </div>
       <div>
         <label>Taux annuel (%)</label>
-        <input type="number" value={taux} onChange={(e) => setTaux(e.target.value)}/>
+        <input type="number" step="0.1" value={taux} onChange={(e) => setTaux(e.target.value)}/>
       </div>
       <button onClick={calculerCredit}>Calculer ma simulation</button>
-      {mensualite > 0 && (
+      {resultat && (
         <div className="resultat">
           <h2>Résultat de votre simulation</h2>
-          <p>Type de crédit : {typeCredit}</p>
-          <p>Mensualité : {mensualite} €/mois</p>
-          <p>Coût total du crédit : {coutTotal} €</p>
-          <p>Montant emprunté : {montant} €</p>
-          <p>Coût du crédit : {(coutTotal - montant).toFixed(2)} €</p>
+          <div className="info-box">
+            <p>Type de crédit : {typeCredit}</p>
+            <p>Montant emprunté : {montant} €</p>
+            <p>Durée : {duree} mois</p>
+            <p>Taux annuel : {taux} %</p>
+          </div>
+          <div className="info-box highlight">
+            <h3>Votre mensualité</h3>
+            <p className="big-number">{resultat.mensualite} €</p>
+          </div>
+          <div className="info-box">
+            <p>Montant total à rembourser : {resultat.coutTotal} €</p>
+            <p>Coût du crédit : {resultat.coutCredit} €</p>
+          </div>
         </div>
       )}
     </div>

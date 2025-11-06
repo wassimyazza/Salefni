@@ -1,5 +1,5 @@
 .App {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -43,18 +43,34 @@ button:hover {
 }
 
 .resultat {
-  background-color: #ecf0f1;
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .resultat h2 {
   color: #27ae60;
-  margin-top: 0;
+  text-align: center;
 }
 
-.resultat p {
-  font-size: 18px;
+.info-box {
+  background-color: #ecf0f1;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.info-box p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.highlight {
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+}
+
+.big-number {
+  font-size: 36px;
+  font-weight: bold;
   margin: 10px 0;
 }
