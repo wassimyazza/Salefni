@@ -8,6 +8,7 @@ function DemandeDetail() {
   const [demande, setDemande] = useState(null)
   const [simulation, setSimulation] = useState(null)
   const [nouveauStatut, setNouveauStatut] = useState('')
+  const [nouvelleNote, setNouvelleNote] = useState('')
 
   useEffect(() => {
     const isAdmin = localStorage.getItem('isAdmin')
@@ -58,6 +59,36 @@ function DemandeDetail() {
       .catch(error => {
         console.log('Erreur:', error)
         alert('Erreur lors de la mise à jour')
+      })
+  }
+
+  function ajouterNote() {
+    if(nouvelleNote.trim() === '') {
+      alert('Veuillez saisir une note')
+      return
+    }
+
+    const notesExistantes = demande.notes || []
+    notesExistantes.push({
+      auteur: 'Admin',
+      date: new Date().toISOString(),
+      contenu: nouvelleNote
+    })
+
+    const demandeModifiee = {
+      ...demande,
+      notes: notesExistantes
+    }
+
+    axios.put(`http://localhost:3001/demandes/${id}`, demandeModifiee)
+      .then(() => {
+        alert('Note ajoutée avec succès !')
+        setNouvelleNote('')
+        chargerDemande()
+      })
+      .catch(error => {
+        console.log('Erreur:', error)
+        alert('Erreur lors de l\'ajout de la note')
       })
   }
 
@@ -207,14 +238,22 @@ function DemandeDetail() {
         </div>
 
         <div className="detail-card full-width">
-          <h2>Notes internes</h2>
+          <h2>Ajouter une note interne</h2>
+          <div className="note-form">
+            <textarea value={nouvelleNote} onChange={(e) => setNouvelleNote(e.target.value)} placeholder="Saisir votre note ici..." rows="4" className="note-textarea"></textarea>
+            <button onClick={ajouterNote} className="btn-add-note">Ajouter la note</button>
+          </div>
+        </div>
+
+        <div className="detail-card full-width">
+          <h2>Notes internes ({demande.notes ? demande.notes.length : 0})</h2>
           {demande.notes && demande.notes.length > 0 ? (
             <div className="notes-list">
               {demande.notes.map((note, index) => (
                 <div key={index} className="note-item">
                   <div className="note-header">
                     <span className="note-author">{note.auteur}</span>
-                    <span className="note-date">{new Date(note.date).toLocaleDateString()}</span>
+                    <span className="note-date">{new Date(note.date).toLocaleDateString()} à {new Date(note.date).toLocaleTimeString()}</span>
                   </div>
                   <p className="note-content">{note.contenu}</p>
                 </div>
