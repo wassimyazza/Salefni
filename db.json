@@ -1,27 +1,57 @@
 {
   "simulations": [
     {
-      "id": "737e",
+      "id": "2cf9",
       "typeCredit": "auto",
-      "montant": "10000",
+      "montant": "12000",
       "duree": "24",
-      "taux": "5",
-      "mensualite": "438.71",
-      "coutTotal": "10529.13",
-      "coutCredit": "529.13",
-      "date": "2025-11-06T19:55:22.388Z"
-    },
-    {
-      "id": "5211",
-      "typeCredit": "auto",
-      "montant": "120000",
-      "duree": "24",
-      "taux": "5",
-      "mensualite": "5264.57",
-      "coutTotal": "126349.60",
-      "coutCredit": "6349.60",
-      "date": "2025-11-06T20:17:31.191Z"
+      "taux": "52",
+      "mensualite": "814.13",
+      "coutTotal": "19539.13",
+      "coutCredit": "7539.13",
+      "date": "2025-11-08T15:27:57.607Z"
     }
   ],
-  "demandes": []
+  "demandes": [
+    {
+      "id": "1",
+      "nom": "Mohammed Alami",
+      "email": "m.alami@email.com",
+      "telephone": "0612345678",
+      "montant": "15000",
+      "statut": "en_attente",
+      "date": "2025-11-01T10:30:00.000Z",
+      "simulationId": 1
+    },
+    {
+      "id": "2",
+      "nom": "Fatima Zahra",
+      "email": "f.zahra@email.com",
+      "telephone": "0623456789",
+      "montant": "25000",
+      "statut": "en_cours",
+      "date": "2025-11-05T14:20:00.000Z",
+      "simulationId": 2
+    },
+    {
+      "id": "3",
+      "nom": "Ahmed Bennis",
+      "email": "a.bennis@email.com",
+      "telephone": "0634567890",
+      "montant": "10000",
+      "statut": "acceptee",
+      "date": "2025-10-28T09:15:00.000Z",
+      "simulationId": 3
+    },
+    {
+      "id": "4",
+      "nom": "Sanaa Idrissi",
+      "email": "s.idrissi@email.com",
+      "telephone": "0645678901",
+      "montant": "8000",
+      "statut": "refusee",
+      "date": "2025-10-25T16:45:00.000Z",
+      "simulationId": 4
+    }
+  ]
 }
