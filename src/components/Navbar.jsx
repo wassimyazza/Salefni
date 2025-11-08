@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
+import NotificationBell from './NotificationBell'
 
 function Navbar() {
+  const isAdmin = localStorage.getItem('isAdmin') === 'true'
+
   return (
     <nav className="navbar">
       <div className="navbar-content">
@@ -8,6 +11,7 @@ function Navbar() {
         <div className="navbar-links">
           <Link to="/">Simulation</Link>
           <Link to="/admin">Admin</Link>
+          {isAdmin && <NotificationBell />}
         </div>
       </div>
     </nav>

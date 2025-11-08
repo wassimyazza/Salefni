@@ -12,15 +12,26 @@
       "date": "2025-11-01T10:30:00.000Z"
     },
     {
-      "id": "6dce",
+      "id": "c406",
       "typeCredit": "auto",
       "montant": "15000",
-      "duree": "24",
-      "taux": "10",
-      "mensualite": "692.17",
-      "coutTotal": "16612.17",
-      "coutCredit": "1612.17",
-      "date": "2025-11-08T15:40:21.624Z"
+      "duree": "47",
+      "taux": "9.9",
+      "mensualite": "386.31",
+      "coutTotal": "18156.62",
+      "coutCredit": "3156.62",
+      "date": "2025-11-08T16:39:52.626Z"
+    },
+    {
+      "id": "641e",
+      "typeCredit": "auto",
+      "montant": "15000",
+      "duree": "45",
+      "taux": "50",
+      "mensualite": "743.42",
+      "coutTotal": "33454.11",
+      "coutCredit": "18454.11",
+      "date": "2025-11-08T16:42:07.478Z"
     }
   ],
   "demandes": [
@@ -33,25 +44,13 @@
       "situationPro": "CDI",
       "commentaire": "Je souhaite acheter une nouvelle voiture pour mes déplacements professionnels.",
       "montant": "15000",
-      "statut": "refusee",
+      "statut": "en_attente",
       "date": "2025-11-01T10:30:00.000Z",
       "simulationId": 1,
       "historique": [
         {
           "statut": "en_attente",
           "date": "2025-11-01T10:30:00.000Z"
-        },
-        {
-          "statut": "en_cours",
-          "date": "2025-11-08T15:55:50.847Z"
-        },
-        {
-          "statut": "acceptee",
-          "date": "2025-11-08T15:56:01.129Z"
-        },
-        {
-          "statut": "refusee",
-          "date": "2025-11-08T15:56:09.737Z"
         }
       ],
       "notes": [
@@ -59,13 +58,46 @@
           "auteur": "Admin",
           "date": "2025-11-01T14:00:00.000Z",
           "contenu": "Dossier reçu, en attente de vérification des documents."
-        },
-        {
-          "auteur": "Admin",
-          "date": "2025-11-08T16:09:24.102Z",
-          "contenu": "this is my note"
         }
       ]
+    },
+    {
+      "id": "486b",
+      "nom": "wassim yazza",
+      "email": "wassimwassim.ka1@gmail.com",
+      "telephone": "0647102474",
+      "revenu": "12000",
+      "situationPro": "CDI",
+      "commentaire": "",
+      "montant": "15000",
+      "statut": "en_attente",
+      "date": "2025-11-08T16:42:28.182Z",
+      "simulationId": 641,
+      "historique": [
+        {
+          "statut": "en_attente",
+          "date": "2025-11-08T16:42:28.182Z"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "demandeId": 1,
+      "titre": "Nouvelle demande de crédit",
+      "message": "Mohammed Alami a soumis une demande de crédit de 15000 €",
+      "date": "2025-11-01T10:30:00.000Z",
+      "lue": true
+    },
+    {
+      "id": "0475",
+      "demandeId": "486b",
+      "titre": "Nouvelle demande de crédit",
+      "message": "wassim yazza a soumis une demande de crédit de 15000 €",
+      "date": "2025-11-08T16:42:28.212Z",
+      "lue": true
     }
   ]
 }
