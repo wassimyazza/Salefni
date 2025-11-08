@@ -151,7 +151,7 @@ function AdminDashboard() {
                   </td>
                   <td>{new Date(demande.date).toLocaleDateString()}</td>
                   <td>
-                    <button className="btn-view">Voir</button>
+                    <button className="btn-view" onClick={() => navigate(`/admin/demande/${demande.id}`)}>Voir</button>
                   </td>
                 </tr>
               ))
