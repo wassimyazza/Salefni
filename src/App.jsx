@@ -5,6 +5,7 @@ import Simulate from './pages/Simulate'
 import RequestForm from './pages/RequestForm'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
+import DemandeDetail from './pages/DemandeDetail'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/request/new/:simulationId" element={<RequestForm />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/demande/:id" element={<DemandeDetail />} />
         </Routes>
       </div>
     </BrowserRouter>

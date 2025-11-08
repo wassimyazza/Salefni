@@ -1,0 +1,186 @@
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+function DemandeDetail() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [demande, setDemande] = useState(null)
+  const [simulation, setSimulation] = useState(null)
+
+  useEffect(() => {
+    const isAdmin = localStorage.getItem('isAdmin')
+    if(isAdmin !== 'true') {
+      navigate('/admin')
+    }
+  }, [navigate])
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/demandes/${id}`)
+      .then(response => {
+        setDemande(response.data)
+        if(response.data.simulationId) {
+          axios.get(`http://localhost:3001/simulations/${response.data.simulationId}`)
+            .then(res => {
+              setSimulation(res.data)
+            })
+        }
+      })
+      .catch(error => {
+        console.log('Erreur:', error)
+      })
+  }, [id])
+
+  function getStatutBadge(statut) {
+    const badges = {
+      'en_attente': 'badge-attente',
+      'en_cours': 'badge-cours',
+      'acceptee': 'badge-accepte',
+      'refusee': 'badge-refuse'
+    }
+    return badges[statut] || ''
+  }
+
+  function getStatutTexte(statut) {
+    const textes = {
+      'en_attente': 'En attente',
+      'en_cours': 'En cours',
+      'acceptee': 'Acceptée',
+      'refusee': 'Refusée'
+    }
+    return textes[statut] || statut
+  }
+
+  if(!demande) {
+    return <div className="loading">Chargement...</div>
+  }
+
+  return (
+    <div className="demande-detail-container">
+      <div className="detail-header">
+        <button onClick={() => navigate('/admin/dashboard')} className="btn-back">← Retour</button>
+        <h1>Détail de la demande #{demande.id}</h1>
+      </div>
+
+      <div className="detail-grid">
+        <div className="detail-card">
+          <h2>Informations du demandeur</h2>
+          <div className="info-row">
+            <span className="info-label">Nom complet :</span>
+            <span className="info-value">{demande.nom}</span>
+          </div>
+          <div className="info-row">
+            <span className="info-label">Email :</span>
+            <span className="info-value">{demande.email}</span>
+          </div>
+          <div className="info-row">
+            <span className="info-label">Téléphone :</span>
+            <span className="info-value">{demande.telephone}</span>
+          </div>
+          <div className="info-row">
+            <span className="info-label">Revenu mensuel :</span>
+            <span className="info-value">{demande.revenu} €</span>
+          </div>
+          <div className="info-row">
+            <span className="info-label">Situation professionnelle :</span>
+            <span className="info-value">{demande.situationPro}</span>
+          </div>
+          {demande.commentaire && (
+            <div className="info-row-full">
+              <span className="info-label">Commentaire :</span>
+              <p className="info-value">{demande.commentaire}</p>
+            </div>
+          )}
+        </div>
+
+        <div className="detail-card">
+          <h2>Simulation associée</h2>
+          {simulation ? (
+            <>
+              <div className="info-row">
+                <span className="info-label">Type de crédit :</span>
+                <span className="info-value">{simulation.typeCredit}</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">Montant emprunté :</span>
+                <span className="info-value">{simulation.montant} €</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">Durée :</span>
+                <span className="info-value">{simulation.duree} mois</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">Taux annuel :</span>
+                <span className="info-value">{simulation.taux} %</span>
+              </div>
+              <div className="info-row highlight-row">
+                <span className="info-label">Mensualité :</span>
+                <span className="info-value highlight-value">{simulation.mensualite} €</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">Coût total :</span>
+                <span className="info-value">{simulation.coutTotal} €</span>
+              </div>
+            </>
+          ) : (
+            <p>Aucune simulation associée</p>
+          )}
+        </div>
+
+        <div className="detail-card">
+          <h2>Statut actuel</h2>
+          <div className="statut-current">
+            <span className={`badge ${getStatutBadge(demande.statut)}`}>
+              {getStatutTexte(demande.statut)}
+            </span>
+          </div>
+          <div className="info-row">
+            <span className="info-label">Date de création :</span>
+            <span className="info-value">{new Date(demande.date).toLocaleDateString()}</span>
+          </div>
+        </div>
+
+        <div className="detail-card">
+          <h2>Historique des statuts</h2>
+          {demande.historique && demande.historique.length > 0 ? (
+            <div className="historique-list">
+              {demande.historique.map((item, index) => (
+                <div key={index} className="historique-item">
+                  <span className={`badge ${getStatutBadge(item.statut)}`}>
+                    {getStatutTexte(item.statut)}
+                  </span>
+                  <span className="historique-date">
+                    {new Date(item.date).toLocaleDateString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Aucun historique disponible</p>
+          )}
+        </div>
+
+        <div className="detail-card full-width">
+          <h2>Notes internes</h2>
+          {demande.notes && demande.notes.length > 0 ? (
+            <div className="notes-list">
+              {demande.notes.map((note, index) => (
+                <div key={index} className="note-item">
+                  <div className="note-header">
+                    <span className="note-author">{note.auteur}</span>
+                    <span className="note-date">{new Date(note.date).toLocaleDateString()}</span>
+                  </div>
+                  <p className="note-content">{note.contenu}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Aucune note interne</p>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default DemandeDetail
