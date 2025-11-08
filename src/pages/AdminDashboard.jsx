@@ -50,6 +50,38 @@ function AdminDashboard() {
     return demandesTriees
   }
 
+  function exporterCSV() {
+    const demandesAExporter = getDemandesTriees()
+    
+    const headers = ['ID', 'Nom', 'Email', 'Téléphone', 'Montant', 'Statut', 'Date', 'Revenu', 'Situation Pro']
+    const lignes = demandesAExporter.map(d => [
+      d.id,
+      d.nom,
+      d.email,
+      d.telephone,
+      d.montant,
+      d.statut,
+      new Date(d.date).toLocaleDateString(),
+      d.revenu || '',
+      d.situationPro || ''
+    ])
+    
+    let csvContent = headers.join(',') + '\n'
+    lignes.forEach(ligne => {
+      csvContent += ligne.join(',') + '\n'
+    })
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(blob)
+    link.setAttribute('href', url)
+    link.setAttribute('download', `demandes_credit_${new Date().toISOString().split('T')[0]}.csv`)
+    link.style.display = 'none'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   function getStatutBadge(statut) {
     const badges = {
       'en_attente': 'badge-attente',
@@ -76,7 +108,10 @@ function AdminDashboard() {
     <div className="admin-container">
       <div className="admin-header">
         <h1>Tableau de bord - Demandes de crédit</h1>
-        <button onClick={handleLogout} className="btn-logout">Déconnexion</button>
+        <div className="admin-header-actions">
+          <button onClick={exporterCSV} className="btn-export">📥 Exporter en CSV</button>
+          <button onClick={handleLogout} className="btn-logout">Déconnexion</button>
+        </div>
       </div>
       
       <div className="admin-filters">

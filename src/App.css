@@ -706,3 +706,39 @@ tr:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.admin-header h1 {
+  margin: 0;
+  text-align: left;
+  font-size: 32px;
+}
+
+.admin-header-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-export {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  width: auto;
+  padding: 14px 28px;
+  font-size: 16px;
+}
+
+.btn-export:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-logout {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  width: auto;
+  padding: 14px 28px;
+  font-size: 16px;
+}
