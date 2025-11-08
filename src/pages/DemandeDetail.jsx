@@ -7,6 +7,7 @@ function DemandeDetail() {
   const navigate = useNavigate()
   const [demande, setDemande] = useState(null)
   const [simulation, setSimulation] = useState(null)
+  const [nouveauStatut, setNouveauStatut] = useState('')
 
   useEffect(() => {
     const isAdmin = localStorage.getItem('isAdmin')
@@ -16,9 +17,14 @@ function DemandeDetail() {
   }, [navigate])
 
   useEffect(() => {
+    chargerDemande()
+  }, [id])
+
+  function chargerDemande() {
     axios.get(`http://localhost:3001/demandes/${id}`)
       .then(response => {
         setDemande(response.data)
+        setNouveauStatut(response.data.statut)
         if(response.data.simulationId) {
           axios.get(`http://localhost:3001/simulations/${response.data.simulationId}`)
             .then(res => {
@@ -29,7 +35,31 @@ function DemandeDetail() {
       .catch(error => {
         console.log('Erreur:', error)
       })
-  }, [id])
+  }
+
+  function changerStatut() {
+    const nouvelHistorique = demande.historique || []
+    nouvelHistorique.push({
+      statut: nouveauStatut,
+      date: new Date().toISOString()
+    })
+
+    const demandeModifiee = {
+      ...demande,
+      statut: nouveauStatut,
+      historique: nouvelHistorique
+    }
+
+    axios.put(`http://localhost:3001/demandes/${id}`, demandeModifiee)
+      .then(() => {
+        alert('Statut mis à jour avec succès !')
+        chargerDemande()
+      })
+      .catch(error => {
+        console.log('Erreur:', error)
+        alert('Erreur lors de la mise à jour')
+      })
+  }
 
   function getStatutBadge(statut) {
     const badges = {
@@ -141,6 +171,22 @@ function DemandeDetail() {
         </div>
 
         <div className="detail-card">
+          <h2>Changer le statut</h2>
+          <div className="statut-change-section">
+            <label>Nouveau statut :</label>
+            <select value={nouveauStatut} onChange={(e) => setNouveauStatut(e.target.value)} className="statut-select">
+              <option value="en_attente">En attente</option>
+              <option value="en_cours">En cours</option>
+              <option value="acceptee">Acceptée</option>
+              <option value="refusee">Refusée</option>
+            </select>
+            <button onClick={changerStatut} className="btn-update-statut" disabled={nouveauStatut === demande.statut}>
+              Mettre à jour le statut
+            </button>
+          </div>
+        </div>
+
+        <div className="detail-card full-width">
           <h2>Historique des statuts</h2>
           {demande.historique && demande.historique.length > 0 ? (
             <div className="historique-list">
@@ -150,7 +196,7 @@ function DemandeDetail() {
                     {getStatutTexte(item.statut)}
                   </span>
                   <span className="historique-date">
-                    {new Date(item.date).toLocaleDateString()}
+                    {new Date(item.date).toLocaleDateString()} à {new Date(item.date).toLocaleTimeString()}
                   </span>
                 </div>
               ))}

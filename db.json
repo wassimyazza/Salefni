@@ -1,7 +1,7 @@
 {
   "simulations": [
     {
-      "id": 1,
+      "id": "1",
       "typeCredit": "auto",
       "montant": "15000",
       "duree": "36",
@@ -25,7 +25,7 @@
   ],
   "demandes": [
     {
-      "id": 1,
+      "id": "1",
       "nom": "Mohammed Alami",
       "email": "m.alami@email.com",
       "telephone": "0612345678",
@@ -33,13 +33,25 @@
       "situationPro": "CDI",
       "commentaire": "Je souhaite acheter une nouvelle voiture pour mes déplacements professionnels.",
       "montant": "15000",
-      "statut": "en_attente",
+      "statut": "refusee",
       "date": "2025-11-01T10:30:00.000Z",
       "simulationId": 1,
       "historique": [
         {
           "statut": "en_attente",
           "date": "2025-11-01T10:30:00.000Z"
+        },
+        {
+          "statut": "en_cours",
+          "date": "2025-11-08T15:55:50.847Z"
+        },
+        {
+          "statut": "acceptee",
+          "date": "2025-11-08T15:56:01.129Z"
+        },
+        {
+          "statut": "refusee",
+          "date": "2025-11-08T15:56:09.737Z"
         }
       ],
       "notes": [
